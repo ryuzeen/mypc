@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ryuzeen Lab: Meu Setup</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Ícones -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Particles.js & Chart.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Ativa o suporte oficial do Tailwind para Dark Mode via classe
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        light: {
+                            bg: '#f4f4f5',
+                            card: '#ffffff',
+                        },
+                        dark: {
+                            900: '#030303',
+                            800: '#0a0a0a',
+                            700: '#111111',
+                        },
+                        accentDark: '#00f0ff', // Ciano para o Dark Mode
+                        accentLight: '#000000', // Preto absoluto para o Light Mode
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar - Dinâmica para ambos os modos */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f4f4f5; }
+        ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+        
+        html.dark ::-webkit-scrollbar-track { background: #030303; }
+        html.dark ::-webkit-scrollbar-thumb { background: #00f0ff; border-radius: 0px; }
+        html.dark ::-webkit-scrollbar-thumb:hover { background: #0088ff; }
+
+        /* Fundo Tecnológico Base - Dinâmico */
+        .tech-grid {
+            background-color: transparent;
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center center;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -2;
+            transition: background-image 0.3s ease;
+        }
+
+        html.dark .tech-grid {
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+        }
+
+        .scanline {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(0, 0, 0, 0.03) 50%, rgba(255,255,255,0) 100%);
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: -1;
+            animation: scan 8s linear infinite;
+        }
+
+        html.dark .scanline {
+            background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0, 240, 255, 0.1) 50%, rgba(0,0,0,0) 100%);
+            opacity: 0.5;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(-100px); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Glitch Effect - Dinâmico */
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+        }
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .glitch-text::before {
+            color: #555; z-index: -1;
+            animation: glitch-anim 4s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            transform: translate(-1px, 1px);
+        }
+        .glitch-text::after {
+            color: #888; z-index: -1;
+            animation: glitch-anim-2 3s infinite;
+            clip-path: polygon(0 80%, 100% 20%, 100% 100%, 0 100%);
+            transform: translate(1px, -1px);
+        }
+
+        html.dark .glitch-text::before { color: #0ff; opacity: 0.8; }
+        html.dark .glitch-text::after { color: #f0f; opacity: 0.8; }
+
+        @keyframes glitch-anim {
+            0% { transform: translate(0) }
+            20% { transform: translate(-1px, 1px) }
+            40% { transform: translate(-1px, -1px) }
+            60% { transform: translate(1px, 1px) }
+            80% { transform: translate(1px, -1px) }
+            100% { transform: translate(0) }
+        }
+        @keyframes glitch-anim-2 {
+            0% { transform: translate(0) }
+            20% { transform: translate(1px, -1px) }
+            40% { transform: translate(1px, 1px) }
+            60% { transform: translate(-1px, -1px) }
+            80% { transform: translate(-1px, 1px) }
+            100% { transform: translate(0) }
+        }
+
+        /* 3D Card Hover Effects & Clean Shadows - Dinâmico */
+        .card-3d-wrapper {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            height: 100%;
+        }
+        .card-3d {
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+        
+        /* Light mode hover */
+        .card-3d-wrapper:hover .card-3d, .hover-glow-card:hover {
+            transform: rotateX(5deg) rotateY(-5deg) scale3d(1.02, 1.02, 1.02);
+            box-shadow: -10px 15px 35px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.1) inset;
+            border-color: rgba(0, 0, 0, 1);
+        }
+
+        /* Dark mode hover */
+        html.dark .card-3d-wrapper:hover .card-3d, html.dark .hover-glow-card:hover {
+            box-shadow: -10px 10px 40px rgba(0, 240, 255, 0.25), 0 0 20px rgba(0, 240, 255, 0.3) inset;
+            border-color: rgba(0, 240, 255, 0.8);
+        }
+
+        /* Mix Blend Mode */
+        .blend-image {
+            mix-blend-mode: darken;
+        }
+
+        /* Intersection Observer Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Accordion Custom */
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+    </style>
+</head>
+<body class="bg-light-bg text-gray-800 dark:bg-dark-900 dark:text-gray-300 font-sans antialiased selection:bg-accentLight selection:text-white dark:selection:bg-accentDark dark:selection:text-dark-900 relative z-0 transition-colors duration-500">
+
+    <!-- Script Inline para evitar Flash Branco/Escuro ao carregar a página -->
+    <script>
+        // Força o Light Mode (branco) como padrão para todos, a menos que o usuário já tenha salvo o Dark Mode antes
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        }
+    </script>
+
+    <!-- Background Elements -->
+    <div id="particles-js" class="fixed inset-0 z-[-3]"></div>
+    <div class="tech-grid"></div>
+    <div class="scanline"></div>
+    
+    <!-- Brilho de fundo sutil dinâmico -->
+    <div class="fixed top-[-150px] left-1/2 transform -translate-x-1/2 w-[600px] h-[600px] bg-white dark:bg-accentDark/20 rounded-full blur-[120px] dark:blur-[100px] pointer-events-none z-[-1] opacity-60 dark:opacity-100 transition-colors duration-700"></div>
+
+    <!-- Navigation Header -->
+    <nav class="fixed top-0 w-full bg-light-bg/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-black/5 dark:border-white/5 z-40 transition-all duration-300">
+        <div class="max-w-[95rem] mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2 text-black dark:text-accentDark font-bold text-xl tracking-tighter transition-colors">
+                <i data-lucide="hexagon" class="w-5 h-5"></i> RYUZEEN<span class="text-gray-500 dark:text-white transition-colors">LAB</span>
+            </div>
+            
+            <div class="flex items-center gap-6">
+                <div class="hidden md:flex items-center gap-8 font-mono text-xs text-gray-500 dark:text-gray-400 font-semibold transition-colors">
+                    <a href="#specs" class="hover:text-black dark:hover:text-accentDark transition-colors">01. SPECS/GEARS</a>
+                    <a href="#benchmarks" class="hover:text-black dark:hover:text-accentDark transition-colors">02. BENCHMARKS</a>
+                </div>
+                
+                <!-- Toggle Dark Mode -->
+                <button id="themeToggle" class="p-2 ml-4 rounded-full text-gray-600 hover:text-black hover:bg-black/5 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/10 transition-all focus:outline-none">
+                    <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+                    <i data-lucide="sun" class="w-5 h-5 hidden dark:block text-yellow-400"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Modal 3D Sketchfab (Gabinete) -->
+    <div id="modal3d" class="fixed inset-0 bg-white/90 dark:bg-black/90 z-50 hidden opacity-0 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
+        <button onclick="close3DModal()" class="absolute top-6 right-6 text-black hover:text-gray-500 dark:text-white dark:hover:text-accentDark transition-colors flex items-center gap-2 font-mono text-sm font-bold">
+            FECHAR [ESC] <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+        <div class="w-full max-w-5xl h-[70vh] rounded-2xl overflow-hidden border border-black/10 dark:border-accentDark/30 shadow-2xl dark:shadow-[0_0_50px_rgba(0,240,255,0.3)] transition-colors">
+            <!-- Modelo 3D gratuito do Sketchfab -->
+            <iframe id="iframe3d" title="PC Case" class="w-full h-full bg-white" src="https://sketchfab.com/models/08c02c91ba42416b8015dc3f6b92f447/embed?autostart=1&ui_theme=dark" allow="autoplay; fullscreen; xr-spatial-tracking" execution-while-out-of-viewport execution-while-not-rendered web-share></iframe>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <header id="home" class="relative pt-40 pb-16 px-6 mx-auto max-w-7xl flex flex-col items-center text-center animate-on-scroll is-visible">
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-black dark:text-white mb-4 tracking-tighter uppercase flex flex-col items-center gap-1 md:gap-3 transition-colors">
+            <span class="glitch-text" data-text="Ryuzeen Lab:">Ryuzeen Lab:</span>
+            <span class="glitch-text text-gray-800 dark:text-accentDark transition-colors" data-text="Meu Setup">Meu Setup</span>
+        </h1>
+        
+        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl font-light leading-relaxed mb-8 mt-4 transition-colors">
+            Projetado para performance extrema, renderização acelerada e dominância no gameplay competitivo.
+        </p>
+    </header>
+
+    <main class="mx-auto max-w-[95rem] px-6 pb-20">
+        
+        <!-- Contêiner Flexível para alinhar ambas as colunas -->
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-stretch">
+            
+            <!-- SEÇÃO: PC BUILD (Ocupa 8 colunas) -->
+            <section id="specs" class="xl:col-span-8 animate-on-scroll delay-100 flex flex-col">
+                <div class="flex items-center justify-between mb-8 border-b border-black/10 dark:border-white/10 pb-4 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <div class="p-2 bg-black/5 dark:bg-accentDark/10 rounded-lg border border-black/10 dark:border-accentDark/20 transition-colors">
+                            <i data-lucide="cpu" class="w-6 h-6 text-black dark:text-accentDark transition-colors"></i>
+                        </div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-black dark:text-white tracking-tight uppercase transition-colors">Componentes Principais</h2>
+                    </div>
+                </div>
+
+                <!-- Novo Grid 3x3 Perfeito -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch flex-1">
+                    
+                    <!-- GPU -->
+                    <div class="card-3d-wrapper">
+                        <div class="card-3d relative rounded-2xl bg-white dark:bg-dark-800 border border-black/5 dark:border-white/5 shadow-sm p-2 h-full flex flex-col transition-colors">
+                            <!-- A caixa da imagem se mantém sempre branca para as fotos JPEG combinarem -->
+                            <div class="relative h-40 w-full rounded-xl bg-white flex items-center justify-center p-4 overflow-hidden border border-gray-100 dark:border-gray-800">
+                                <img src="https://images1.kabum.com.br/produtos/fotos/517751/placa-de-video-rtx-4070-super-gigabyte-windforce-nvidia-geforce-12gb-gddr6-dlss-ray-tracing-gv-n407swf3-12gd_1707245338_gg.jpg" alt="GPU" class="w-full h-full object-contain blend-image">
+                            </div>
+                            <div class="p-5 flex-1 flex flex-col">
+                                <p class="text-[10px] font-mono text-gray-500 dark:text-accentDark font-bold mb-1 transition-colors">GPU // VÍDEO</p>
+                                <h3 class="text-lg text-black dark:text-white font-bold leading-tight mb-1 transition-colors">RTX 4070 SUPER</h3>
+                                <p class="text-xs text-gray-600 dark:text-gray-500 mb-4 transition-colors">12GB GDDR6X</p>
+                                
+                                <details class="mt-auto group/details">
+                                    <summary class="cursor-pointer text-xs font-mono text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-accentDark font-semibold flex items-center gap-1 transition-colors outline-none">
+                                        <i data-lucide="plus-square" class="w-3 h-3 group-open/details:hidden"></i>
+                                        <i data-lucide="minus-square" class="w-3 h-3 hidden group-open/details:block"></i>
+                                        EXPANDIR SPECS
+                                    </summary>
+                                    <div class="pt-3 mt-3 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs font-mono text-gray-600 dark:text-gray-500 transition-colors">
+                                        <div class="flex justify-between"><span>Clock</span> <span class="text-black dark:text-white font-bold transition-colors">2475 MHz</span></div>
+                                        <div class="flex justify-between"><span>TDP</span> <span class="text-black dark:text-accentDark font-bold transition-colors">220 W</span></div>
+                                        <div class="flex justify-between"><span>Preço Est.</span> <span class="text-black dark:text-white font-bold transition-colors">R$ 4.200</span></div>
+                                        <a href="https://www.google.com/search?q=RTX+4070+SUPER+12gb" target="_blank" class="block text-black dark:text-accentDark font-bold hover:underline mt-2 transition-colors">> Pesquisar</a>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CPU -->
+                    <div class="card-3d-wrapper">
+                        <div class="card-3d relative rounded-2xl bg-white dark:bg-dark-800 border border-black/5 dark:border-white/5 shadow-sm p-2 h-full flex flex-col transition-colors">
+                            <div class="relative h-40 w-full rounded-xl bg-white flex items-center justify-center p-4 overflow-hidden border border-gray-100 dark:border-gray-800">
+                                <img src="https://media.pichau.com.br/media/catalog/product/cache/2f958555330323e505eba7ce930bdf27/1/0/100-100000591wof.jpg" alt="CPU" class="w-full h-full object-contain blend-image">
+                            </div>
+                            <div class="p-5 flex-1 flex flex-col">
+                                <p class="text-[10px] font-mono text-gray-500 dark:text-accentDark font-bold mb-1 transition-colors">CPU // PROCESSADOR</p>
+                                <h3 class="text-lg text-black dark:text-white font-bold leading-tight mb-1 transition-colors">Ryzen 7 7700X</h3>
+                                <p class="text-xs text-gray-600 dark:text-gray-500 mb-4 transition-colors">AMD AM5</p>
+                                
+                                <details class="mt-auto group/details">
+                                    <summary class="cursor-pointer text-xs font-mono text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-accentDark font-semibold flex items-center gap-1 transition-colors outline-none">
+                                        <i data-lucide="plus-square" class="w-3 h-3 group-open/details:hidden"></i>
+                                        <i data-lucide="minus-square" class="w-3 h-3 hidden group-open/details:block"></i>
+                                        EXPANDIR SPECS
+                                    </summary>
+                                    <div class="pt-3 mt-3 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs font-mono text-gray-600 dark:text-gray-500 transition-colors">
+                                        <div class="flex justify-between"><span>Boost</span> <span class="text-black dark:text-white font-bold transition-colors">5.4 GHz</span></div>
+                                        <div class="flex justify-between"><span>TDP</span> <span class="text-black dark:text-accentDark font-bold transition-colors">105 W</span></div>
+                                        <div class="flex justify-between"><span>Preço Est.</span> <span class="text-black dark:text-white font-bold transition-colors">R$ 2.100</span></div>
+                                        <a href="https://www.google.com/search?q=AMD+Ryzen+7+7700X" target="_blank" class="block text-black dark:text-accentDark font-bold hover:underline mt-2 transition-colors">> Pesquisar</a>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RAM -->
+                    <div class="card-3d-wrapper">
+                        <div class="card-3d relative rounded-2xl bg-white dark:bg-dark-800 border border-black/5 dark:border-white/5 shadow-sm p-2 h-full flex flex-col transition-colors">
+                            <div class="relative h-40 w-full rounded-xl bg-white flex items-center justify-center p-4 overflow-hidden border border-gray-100 dark:border-gray-800">
+                                <img src="https://img.terabyteshop.com.br/produto/g/memoria-ddr5-kingston-fury-beast-32gb-5200mhz-preto-kf552c40bb32_261118.jpg" alt="RAM" class="w-full h-full object-contain blend-image">
+                            </div>
+                            <div class="p-5 flex-1 flex flex-col">
+                                <p class="text-[10px] font-mono text-gray-500 dark:text-accentDark font-bold mb-1 transition-colors">RAM // MEMÓRIA</p>
+                                <h3 class="text-lg text-black dark:text-white font-bold leading-tight mb-1 transition-colors">32GB Kingston Fury</h3>
+                                <p class="text-xs text-gray-600 dark:text-gray-500 mb-4 transition-colors">DDR5 5200MHz</p>
+
+                                <details class="mt-auto group/details">
+                                    <summary class="cursor-pointer text-xs font-mono text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-accentDark font-semibold flex items-center gap-1 transition-colors outline-none">
+                                        <i data-lucide="plus-square" class="w-3 h-3 group-open/details:hidden"></i>
+                                        <i data-lucide="minus-square" class="w-3 h-3 hidden group-open/details:block"></i>
+                                        EXPANDIR SPECS
+                                    </summary>
+                                    <div class="pt-3 mt-3 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs font-mono text-gray-600 dark:text-gray-500 transition-colors">
+                                        <div class="flex justify-between"><span>Capacidade</span> <span class="text-black dark:text-white font-bold transition-colors">2x16GB</span></div>
+                                        <div class="flex justify-between"><span>Latência</span> <span class="text-black dark:text-accentDark font-bold transition-colors">CL40</span></div>
+                                        <div class="flex justify-between"><span>Preço Est.</span> <span class="text-black dark:text-white font-bold transition-colors">R$ 750</span></div>
+                                        <a href="https://www.google.com/search?q=32GB+Kingston+Fury+DDR5" target="_blank" class="block text-black dark:text-accentDark font-bold hover:underline mt-2 transition-colors">> Pesquisar</a>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Placa Mãe -->
+                    <div class="card-3d-wrapper">
+                        <div class="card-3d relative rounded-2xl bg-white dark:bg-dark-800 border border-black/5 dark:border-white/5 shadow-sm p-2 h-full flex flex-col transition-colors">
+                            <div class="relative h-40 w-full rounded-xl bg-white flex items-center justify-center p-4 overflow-hidden border border-gray-100 dark:border-gray-800">
+                                <img src="https://dlcdnwebimgs.asus.com/gain/58e593d1-b3f8-46e8-9639-e9bb563d1360/" alt="Placa Mãe" class="w-full h-full object-contain blend-image">
+                            </div>
+                            <div class="p-5 flex-1 flex flex-col">
+                                <p class="text-[10px] font-mono text-gray-500 dark:text-accentDark font-bold mb-1 transition-colors">MOBO // PLACA MÃE</p>
+                                <h3 class="text-lg text-black dark:text-white font-bold leading-tight mb-1 transition-colors">Asus TUF B650M-Plus</h3>
+                                <p class="text-xs text-gray-600 dark:text-gray-500 mb-4 transition-colors">Micro ATX Wi-Fi</p>
+
+                                <details class="mt-auto group/details">
+                                    <summary class="cursor-pointer text-xs font-mono text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-accentDark font-semibold flex items-center gap-1 transition-colors outline-none">
+                                        <i data-lucide="plus-square" class="w-3 h-3 group-open/details:hidden"></i>
+                                        <i data-lucide="minus-square" class="w-3 h-3 hidden group-open/details:block"></i>
+                                        EXPANDIR SPECS
+                                    </summary>
+                                    <div class="pt-3 mt-3 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs font-mono text-gray-600 dark:text-gray-500 transition-colors">
+                                        <div class="flex justify-between"><span>Formato</span> <span class="text-black dark:text-white font-bold transition-colors">mATX</span></div>
+                                        <div class="flex justify-between"><span>Socket</span> <span class="text-black dark:text-white font-bold transition-colors">AM5</span></div>
+                                        <div class="flex justify-between"><span>Preço Est.</span> <span class="text-black dark:text-accentDark font-bold transition-colors">R$ 1.500</span></div>
+                                        <a href="https://www.google.com/search?q=Asus+TUF+B650M-Plus+WiFi" target="_blank" class="block text-black dark:text-accentDark font-bold hover:underline mt-2 transition-colors">> Pesquisar</a>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fonte -->
+                    <div class="card-3d-wrapper">
+                        <div class="card-3d relative rounded-2xl bg-white dark:bg-dark-800 border border-black/5 dark:border-white/5 shadow-sm p-2 h-full flex flex-col transition-colors">
+                            <div class="relative h-40 w-full rounded-xl bg-white flex items-center justify-center p-4 overflow-hidden border border-gray-100 dark:border-gray-800">
+                                <img src="https://images6.kabum.com.br/produtos/fotos/462816/fonte-msi-mag-a850gl-atx-850w-80-plus-gold-modular-pfc-ativo-bivolt-preto_1698349376_gg.jpg" alt="PSU" class="w-full h-full object-contain blend-image">
+                            </div>
+                            <div class="p-5 flex-1 flex flex-col">
+                                <p class="text-[10px] font-mono text-gray-500 dark:text-accentDark font-bold mb-1 transition-colors">PSU // FONTE</p>
+                                <h3 class="text-lg text-black dark:text-white font-bold leading-tight mb-1 transition-colors">MSI MAG A850GL</h3>
+                                <p class="text-xs text-gray-600 dark:text-gray-500 mb-4 transition-colors">850W 80 Plus Gold</p>
+
+                                <details class="mt-auto group/details">
+                                    <summary class="cursor-pointer text-xs font-mono text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-accentDark font-semibold flex items-center gap-1 transition-colors outline-none">
+                                        <i data-lucide="plus-square" class="w-3 h-3 group-open/details:hidden"></i>
+                                        <i data-lucide="minus-square" class="w-3 h-3 hidden group-open/details:block"></i>
+                                        EXPANDIR SPECS
+                                    </summary>
+                                    <div class="pt-3 mt-3 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs font-mono text-gray-600 dark:text-gray-500 transition-colors">
+                                        <div class="flex justify-between"><span>Certificação</span> <span class="text-black dark:text-accentDark font-bold transition-colors">80 Plus Gold</span></div>
+                                        <div class="flex justify-between"><span>Modular</span> <span class="text-black dark:text-white font-bold transition-colors">Full Modular</span></div>
+                                        <div class="flex justify-between"><span>Preço Est.</span> <span class="text-black dark:text-white font-bold transition-colors">R$ 700</span></div>
+                                        <a href="https://www.google.com/search?q=MSI+MAG+A850GL+850W+Gold" target="_blank" class="block text-black dark:text-accentDark font-bold hover:underline mt-2 transition-colors">> Pesquisar</a>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SSD -->
+                    <div class="card-3d-wrapper">
+                        <div class="card-3d relative rounded-2xl bg-white dark:bg-dark-800 border border-black/5 dark:border-white/5 shadow-sm p-2 h-full flex flex-col transition-colors">
+                            <div class="relative h-40 w-full rounded-xl bg-white flex items-center justify-center p-4 overflow-hidden border border-gray-100 dark:border-gray-800">
+                                <img src="https://img.terabyteshop.com.br/produto/p/ssd-kingston-nv2-1tb-m2-nvme-2280-leitura-3500mbs-e-gravacao-2100mbs-snv2s1000g_154119.jpg" alt="SSD" class="w-full h-full object-contain blend-image">
+                            </div>
+                            <div class="p-5 flex-1 flex flex-col">
+                                <p class="text-[10px] font-mono text-gray-500 dark:text-accentDark font-bold mb-1 transition-colors">STORAGE // SSD</p>
+                                <h3 class="text-lg text-black dark:text-white font-bold leading-tight mb-1 transition-colors">Kingston NV2 1TB</h3>
+                                <p class="text-xs text-gray-600 dark:text-gray-500 mb-4 transition-colors">M.2 NVMe Gen4</p>
+                                
+                                <details class="mt-auto group/details">
+                                    <summary class="cursor-pointer text-xs font-mono text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-accentDark font-semibold flex items-center gap-1 transition-colors outline-none">
+                                        <i data-lucide="plus-square" class="w-3 h-3 group-open/details:hidden"></i>
+                                        <i data-lucide="minus-square" class="w-3 h-3 hidden group-open/details:block"></i>
+                                        EXPANDIR SPECS
+                                    </summary>
+                                    <div class="pt-3 mt-3 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs font-mono text-gray-600 dark:text-gray-500 transition-colors">
+                                        <div class="flex justify-between"><span>Leitura</span> <span class="text-black dark:text-accentDark font-bold transition-colors">3500 MB/s</span></div>
+                                        <div class="flex justify-between"><span>Gravação</span> <span class="text-black dark:text-white font-bold transition-colors">2100 MB/s</span></div>
+                                        <div class="flex justify-between"><span>Preço Est.</span> <span class="text-black dark:text-white font-bold transition-colors">R$ 400</span></div>
+                                        <a href="https://www.google.com/search?q=SSD+Kingston+NV2+1TB+M.2+NVMe" target="_blank" class="block text-black dark:text-accentDark font-bold hover:underline mt-2 transition-colors">> Pesquisar</a>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gabinete com interatividade 3D (Ocupa as 3 colunas em telas grandes) -->
+                    <div class="card-3d-wrapper md:col-span-2 lg:col-span-3">
+                        <div class="card-3d relative rounded-2xl bg-white dark:bg-dark-800 border border-black/10 dark:border-accentDark/30 shadow-sm p-2 h-full flex flex-col overflow-hidden transition-colors">
+                            <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(0,240,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,240,255,0.05)_1px,transparent_1px)] bg-[size:10px_10px] pointer-events-none opacity-50 transition-colors"></div>
+                            
+                            <div class="relative h-56 w-full rounded-xl bg-white flex items-center justify-center p-4 overflow-hidden group/img border border-gray-100 dark:border-gray-800 transition-colors">
+                                <img src="https://img.terabyteshop.com.br/produto/p/gabinete-gamer-liketec-madness-cube-design-mid-tower-vidro-temperado-m-atx-black-sem-fonte-sem-fans_199010.jpg" alt="Case" class="w-full h-full object-contain blend-image">
+                                
+                                <!-- Botão de explorar 3D hover -->
+                                <button onclick="open3DModal()" class="absolute inset-0 bg-white/70 dark:bg-black/60 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity backdrop-blur-sm">
+                                    <span class="px-6 py-3 border border-black dark:border-accentDark text-black dark:text-accentDark font-bold font-mono text-sm bg-white/90 dark:bg-dark-900/90 flex items-center gap-2 shadow-lg dark:shadow-[0_0_15px_rgba(0,240,255,0.4)] transition-colors">
+                                        <i data-lucide="box" class="w-5 h-5"></i> EXPLORAR 360°
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="p-5 flex-1 flex flex-col justify-end z-10">
+                                <p class="text-[10px] font-mono text-gray-500 dark:text-accentDark font-bold mb-1 transition-colors">CASE // GABINETE</p>
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-xl text-black dark:text-white font-bold leading-tight mb-1 transition-colors">Liketec Madness Cube</h3>
+                                    <a href="https://www.google.com/search?q=Gabinete+Gamer+Liketec+Madness+Cube" target="_blank" class="text-xs font-mono text-black dark:text-accentDark font-bold hover:underline transition-colors">> Pesquisar</a>
+                                </div>
+                                <p class="text-xs text-gray-600 dark:text-gray-400 transition-colors">Mid Tower / Vidro Temperado / Aquário. Preço Estimado: R$ 350</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- SEÇÃO: PERIFÉRICOS (Ocupa 4 colunas - lateral) -->
+            <section id="perifericos" class="xl:col-span-4 animate-on-scroll delay-200 mt-12 xl:mt-0 flex flex-col h-full">
+                <div class="flex items-center justify-between mb-8 border-b border-black/10 dark:border-white/10 pb-4 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <div class="p-2 bg-black/5 dark:bg-accentDark/10 rounded-lg border border-black/10 dark:border-accentDark/20 transition-colors">
+                            <i data-lucide="mouse" class="w-6 h-6 text-black dark:text-accentDark transition-colors"></i>
+                        </div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-black dark:text-white tracking-tight uppercase transition-colors">Gear</h2>
+                    </div>
+                </div>
+
+                <!-- Div flex-1 forçando alinhamento vertical -->
+                <div class="flex flex-col gap-4 flex-1">
+                    
+                    <!-- Monitor -->
+                    <div class="hover-glow-card flex-1 flex flex-col justify-center p-3 bg-white dark:bg-dark-800 border border-black/5 dark:border-white/5 shadow-sm rounded-2xl transition-all duration-300 transform-style-preserve-3d card-3d">
+                        <div class="flex items-center gap-4 w-full">
+                            <div class="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-white flex items-center justify-center p-2 relative border border-gray-100 dark:border-gray-800 transition-colors">
+                                <img src="https://m.media-amazon.com/images/I/61aBgNvGk0L._AC_SX522_.jpg" alt="Monitor" class="w-full h-full object-contain blend-image">
+                            </div>
+                            <div class="flex-1 pr-2">
+                                <p class="text-[10px] font-mono text-gray-500 dark:text-accentDark font-bold mb-0.5 transition-colors">DISPLAY</p>
+                                <h3 class="text-base text-black dark:text-white font-bold leading-tight transition-colors">AOC Agon</h3>
+                                <p class="text-xs text-gray-600 dark:text-gray-500 mt-0.5 transition-colors">240Hz Ultrafast Panel</p>
+                            </div>
+                        </div>
+                        <details class="group/details mt-auto pt-2">
+                            <summary class="cursor-pointer text-xs font-mono text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-accentDark font-semibold flex items-center gap-1 transition-colors outline-none px-2">
+                                <i data-lucide="chevron-down" class="w-4 h-4 group-open/details:rotate-180 transition-transform"></i> Mais Detalhes
+                            </summary>
+                            <div class="pt-2 mt-2 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs font-mono text-gray-600 dark:text-gray-500 px-2 transition-colors">
+                                <div class="flex justify-between"><span>Resolução</span> <span class="text-black dark:text-white font-bold transition-colors">1080p / 1ms</span></div>
+                                <div class="flex justify-between"><span>Preço Est.</span> <span class="text-black dark:text-accentDark font-bold transition-colors">R$ 1.800</span></div>
+                                <a href="https://www.google.com/search?q=Monitor+AOC+240hz" target="_blank" class="block text-black dark:text-accentDark font-bold hover:underline mt-1 transition-colors">> Link para Compra</a>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Mouse -->
+                    <div class="hover-glow-card flex-1 flex flex-col justify-center p-3 bg-white dark:bg-dark-800 border border-black/5 dark:border-white/5 shadow-sm rounded-2xl transition-all duration-300 transform-style-preserve-3d card-3d">
+                        <div class="flex items-center gap-4 w-full">
+                            <div class="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-white flex items-center justify-center p-2 border border-gray-100 dark:border-gray-800 transition-colors">
+                                <img src="https://images.kabum.com.br/produtos/fotos/149989/mouse-sem-fio-gamer-logitech-g-pro-x-superlight-lightspeed-25000-dpi-5-botoes-preto-910-005879_1727272012_gg.jpg" alt="Mouse" class="w-full h-full object-contain blend-image">
+                            </div>
+                            <div class="flex-1 pr-2">
+                                <p class="text-[10px] font-mono text-gray-500 dark:text-accentDark font-bold mb-0.5 transition-colors">MOUSE</p>
+                                <h3 class="text-base text-black dark:text-white font-bold leading-tight transition-colors">G Pro X Superlight</h3>
+                                <p class="text-xs text-gray-600 dark:text-gray-500 mt-0.5 transition-colors">Logitech G / Wireless / 63g</p>
+                            </div>
+                        </div>
+                        <details class="group/details mt-auto pt-2">
+                            <summary class="cursor-pointer text-xs font-mono text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-accentDark font-semibold flex items-center gap-1 transition-colors outline-none px-2">
+                                <i data-lucide="chevron-down" class="w-4 h-4 group-open/details:rotate-180 transition-transform"></i> Mais Detalhes
+                            </summary>
+                            <div class="pt-2 mt-2 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs font-mono text-gray-600 dark:text-gray-500 px-2 transition-colors">
+                                <div class="flex justify-between"><span>Sensor</span> <span class="text-black dark:text-white font-bold transition-colors">HERO 25K</span></div>
+                                <div class="flex justify-between"><span>Bateria</span> <span class="text-black dark:text-white font-bold transition-colors">70 Horas</span></div>
+                                <div class="flex justify-between"><span>Preço Est.</span> <span class="text-black dark:text-accentDark font-bold transition-colors">R$ 700</span></div>
+                                <a href="https://www.google.com/search?q=Logitech+G+Pro+X+Superlight" target="_blank" class="block text-black dark:text-accentDark font-bold hover:underline mt-1 transition-colors">> Link para Compra</a>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Teclado -->
+                    <div class="hover-glow-card flex-1 flex flex-col justify-center p-3 bg-white dark:bg-dark-800 border border-black/5 dark:border-white/5 shadow-sm rounded-2xl transition-all duration-300 transform-style-preserve-3d card-3d">
+                        <div class="flex items-center gap-4 w-full">
+                            <div class="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-white flex items-center justify-center p-2 border border-gray-100 dark:border-gray-800 transition-colors">
+                                <img src="https://images2.kabum.com.br/produtos/fotos/703012/teclado-gamer-logitech-g-pro-x-tkl-rapid-switches-magnetico-analogicos-modo-rapid-trigger-layout-us-preto-920-013131_1754997550_gg.jpg" alt="Teclado" class="w-full h-full object-contain blend-image">
+                            </div>
+                            <div class="flex-1 pr-2">
+                                <p class="text-[10px] font-mono text-gray-500 dark:text-accentDark font-bold mb-0.5 transition-colors">KEYBOARD</p>
+                                <h3 class="text-base text-black dark:text-white font-bold leading-tight transition-colors">G Pro X TKL Rapid</h3>
+                                <p class="text-xs text-gray-600 dark:text-gray-500 mt-0.5 transition-colors">Magnetic Switches / TKL</p>
+                            </div>
+                        </div>
+                        <details class="group/details mt-auto pt-2">
+                            <summary class="cursor-pointer text-xs font-mono text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-accentDark font-semibold flex items-center gap-1 transition-colors outline-none px-2">
+                                <i data-lucide="chevron-down" class="w-4 h-4 group-open/details:rotate-180 transition-transform"></i> Mais Detalhes
+                            </summary>
+                            <div class="pt-2 mt-2 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs font-mono text-gray-600 dark:text-gray-500 px-2 transition-colors">
+                                <div class="flex justify-between"><span>Tipo</span> <span class="text-black dark:text-white font-bold transition-colors">Analógico / Rapid Trigger</span></div>
+                                <div class="flex justify-between"><span>Preço Est.</span> <span class="text-black dark:text-accentDark font-bold transition-colors">R$ 1.200</span></div>
+                                <a href="https://www.google.com/search?q=Logitech+G+Pro+X+TKL+Rapid" target="_blank" class="block text-black dark:text-accentDark font-bold hover:underline mt-1 transition-colors">> Link para Compra</a>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Headset -->
+                    <div class="hover-glow-card flex-1 flex flex-col justify-center p-3 bg-white dark:bg-dark-800 border border-black/5 dark:border-white/5 shadow-sm rounded-2xl transition-all duration-300 transform-style-preserve-3d card-3d">
+                        <div class="flex items-center gap-4 w-full">
+                            <div class="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-white flex items-center justify-center p-2 border border-gray-100 dark:border-gray-800 transition-colors">
+                                <img src="https://resource.logitech.com/content/dam/gaming/en/products/pro-wireless/pro-wireless-headset-gallery-1.png" alt="Headset" class="w-full h-full object-contain blend-image">
+                            </div>
+                            <div class="flex-1 pr-2">
+                                <p class="text-[10px] font-mono text-gray-500 dark:text-accentDark font-bold mb-0.5 transition-colors">AUDIO</p>
+                                <h3 class="text-base text-black dark:text-white font-bold leading-tight transition-colors">G Pro X 2 Lightspeed</h3>
+                                <p class="text-xs text-gray-600 dark:text-gray-500 mt-0.5 transition-colors">Graphene Drivers</p>
+                            </div>
+                        </div>
+                        <details class="group/details mt-auto pt-2">
+                            <summary class="cursor-pointer text-xs font-mono text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-accentDark font-semibold flex items-center gap-1 transition-colors outline-none px-2">
+                                <i data-lucide="chevron-down" class="w-4 h-4 group-open/details:rotate-180 transition-transform"></i> Mais Detalhes
+                            </summary>
+                            <div class="pt-2 mt-2 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs font-mono text-gray-600 dark:text-gray-500 px-2 transition-colors">
+                                <div class="flex justify-between"><span>Conexão</span> <span class="text-black dark:text-white font-bold transition-colors">Lightspeed / BT</span></div>
+                                <div class="flex justify-between"><span>Bateria</span> <span class="text-black dark:text-white font-bold transition-colors">50 Horas</span></div>
+                                <div class="flex justify-between"><span>Preço Est.</span> <span class="text-black dark:text-accentDark font-bold transition-colors">R$ 1.600</span></div>
+                                <a href="https://www.google.com/search?q=Logitech+G+Pro+X+2+Lightspeed" target="_blank" class="block text-black dark:text-accentDark font-bold hover:underline mt-1 transition-colors">> Link para Compra</a>
+                            </div>
+                        </details>
+                    </div>
+
+                    <!-- Mousepad -->
+                    <div class="hover-glow-card flex-1 flex flex-col justify-center p-3 bg-white dark:bg-dark-800 border border-black/5 dark:border-white/5 shadow-sm rounded-2xl transition-all duration-300 transform-style-preserve-3d card-3d">
+                        <div class="flex items-center gap-4 w-full">
+                            <div class="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-white flex items-center justify-center p-2 border border-gray-100 dark:border-gray-800 transition-colors">
+                                <img src="https://ae-pic-a1.aliexpress-media.com/kf/S6ba7a083fc6a4d32b895e8c8bd2b0fffA.jpg_960x960q75.jpg_.avif" alt="Mousepad" class="w-full h-full object-contain blend-image">
+                            </div>
+                            <div class="flex-1 pr-2">
+                                <p class="text-[10px] font-mono text-gray-500 dark:text-accentDark font-bold mb-0.5 transition-colors">SURFACE</p>
+                                <h3 class="text-base text-black dark:text-white font-bold leading-tight transition-colors">Kanji Custom</h3>
+                                <p class="text-xs text-gray-600 dark:text-gray-500 mt-0.5 transition-colors">45x40x0.4cm Control</p>
+                            </div>
+                        </div>
+                        <details class="group/details mt-auto pt-2">
+                            <summary class="cursor-pointer text-xs font-mono text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-accentDark font-semibold flex items-center gap-1 transition-colors outline-none px-2">
+                                <i data-lucide="chevron-down" class="w-4 h-4 group-open/details:rotate-180 transition-transform"></i> Mais Detalhes
+                            </summary>
+                            <div class="pt-2 mt-2 border-t border-black/5 dark:border-white/5 space-y-1.5 text-xs font-mono text-gray-600 dark:text-gray-500 px-2 transition-colors">
+                                <div class="flex justify-between"><span>Deslize</span> <span class="text-black dark:text-white font-bold transition-colors">Control/Speed</span></div>
+                                <div class="flex justify-between"><span>Preço Est.</span> <span class="text-black dark:text-accentDark font-bold transition-colors">R$ 150</span></div>
+                                <a href="https://www.google.com/search?q=Mousepad+Kanji+45x40x0.4cm" target="_blank" class="block text-black dark:text-accentDark font-bold hover:underline mt-1 transition-colors">> Link para Compra</a>
+                            </div>
+                        </details>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+
+        <!-- SEÇÃO: BENCHMARKS & STATS -->
+        <section id="benchmarks" class="mt-24 pt-10 border-t border-black/10 dark:border-white/10 animate-on-scroll transition-colors">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="p-2 bg-black/5 dark:bg-accentDark/10 rounded-lg border border-black/10 dark:border-accentDark/20 transition-colors">
+                    <i data-lucide="bar-chart-2" class="w-6 h-6 text-black dark:text-accentDark transition-colors"></i>
+                </div>
+                <h2 class="text-2xl md:text-3xl font-bold text-black dark:text-white tracking-tight uppercase transition-colors">Performance & Dados</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Gráfico de FPS -->
+                <div class="bg-white dark:bg-dark-800 border border-black/5 dark:border-white/5 shadow-sm rounded-2xl p-6 hover:border-black/30 dark:hover:border-accentDark/40 transition-colors duration-300 hover:shadow-lg dark:hover:shadow-[0_0_30px_rgba(0,240,255,0.1)]">
+                    <h3 class="font-mono text-gray-600 dark:text-accentDark font-bold text-sm mb-6 uppercase flex items-center justify-between transition-colors">
+                        Desempenho FPS (1440p)
+                        <i data-lucide="crosshair" class="w-4 h-4 text-black dark:text-white transition-colors"></i>
+                    </h3>
+                    <div class="relative h-64 w-full">
+                        <canvas id="fpsChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gráfico Radar System Power -->
+                <div class="bg-white dark:bg-dark-800 border border-black/5 dark:border-white/5 shadow-sm rounded-2xl p-6 hover:border-black/30 dark:hover:border-accentDark/40 transition-colors duration-300 hover:shadow-lg dark:hover:shadow-[0_0_30px_rgba(0,240,255,0.1)]">
+                    <h3 class="font-mono text-gray-600 dark:text-accentDark font-bold text-sm mb-6 uppercase flex items-center justify-between transition-colors">
+                        Equilíbrio do Sistema
+                        <i data-lucide="activity" class="w-4 h-4 text-black dark:text-white transition-colors"></i>
+                    </h3>
+                    <div class="relative h-64 w-full flex justify-center">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Interativo -->
+    <footer class="border-t border-black/10 dark:border-white/10 bg-light-bg/80 dark:bg-dark-900/80 backdrop-blur-md py-8 mt-10 transition-colors duration-300">
+        <div class="max-w-[95rem] mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <p class="text-sm font-mono text-gray-500 font-semibold transition-colors">
+                &copy; <span id="year"></span> RYUZEEN LAB.
+            </p>
+
+            <a href="https://github.com/ryuzeen" target="_blank" class="flex items-center gap-2 font-mono text-sm font-bold text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-accentDark transition-colors">
+                <i data-lucide="github" class="w-5 h-5"></i>
+                github.com/ryuzeen
+            </a>
+            
+        </div>
+    </footer>
+
+    <!-- Scripts e Lógica da Aplicação -->
+    <script>
+        // Inicializar Lucide Icons
+        lucide.createIcons();
+
+        // Footer Year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Lógica do Theme Toggle (Dark/Light Mode)
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        
+        function updateThemeElements(isDark) {
+            // Recarregar partículas com cores do tema
+            initParticles(isDark);
+            // Atualizar cores dos gráficos
+            if(window.fpsChartInst && window.radarChartInst) {
+                updateChartColors(isDark);
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            const isDark = htmlElement.classList.contains('dark');
+            
+            if (isDark) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+            updateThemeElements(isDark);
+        });
+
+        // Intersection Observer para animações On Scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Partículas Dinâmicas
+        function initParticles(isDark) {
+            // Remove instâncias antigas se existirem
+            if(window.pJSDom && window.pJSDom.length > 0) {
+                window.pJSDom[0].pJS.fn.vendors.destroypJS();
+                window.pJSDom = [];
+            }
+            
+            const pColor = isDark ? "#00f0ff" : "#000000";
+            const pOpacity = isDark ? 0.3 : 0.15;
+            const lOpacity = isDark ? 0.25 : 0.1;
+
+            particlesJS("particles-js", {
+                "particles": {
+                    "number": { "value": 70, "density": { "enable": true, "value_area": 800 } },
+                    "color": { "value": pColor },
+                    "shape": { "type": "circle" },
+                    "opacity": { "value": pOpacity, "random": false, "anim": { "enable": true, "speed": 1, "opacity_min": 0.05, "sync": false } },
+                    "size": { "value": 2, "random": true },
+                    "line_linked": { "enable": true, "distance": 140, "color": pColor, "opacity": lOpacity, "width": 1 },
+                    "move": { "enable": true, "speed": 1.5, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                    "modes": { "grab": { "distance": 180, "line_linked": { "opacity": isDark ? 0.6 : 0.3 } }, "push": { "particles_nb": 4 } }
+                },
+                "retina_detect": true
+            });
+        }
+
+        // Gráficos Dinâmicos
+        Chart.defaults.font.family = "'JetBrains Mono', monospace";
+        
+        const ctxFps = document.getElementById('fpsChart').getContext('2d');
+        const ctxRadar = document.getElementById('radarChart').getContext('2d');
+        
+        window.fpsChartInst = new Chart(ctxFps, {
+            type: 'bar',
+            data: {
+                labels: ['CS:2', 'Apex Legends', 'Final Fantasy 16', 'Alan Wake 2'],
+                datasets: [{
+                    label: 'Média FPS',
+                    data: [700, 500, 350, 300],
+                    borderWidth: 2,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { borderWidth: 1, padding: 10, displayColors: false } },
+                scales: { x: { grid: { display: false } } }
+            }
+        });
+
+        window.radarChartInst = new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: ['Gaming Extremo', 'Produtividade', 'Multitasking', 'Eficiência Térmica', 'Estabilidade'],
+                datasets: [{
+                    label: 'Pontuação',
+                    data: [100, 100, 100, 100, 100], 
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: { borderWidth: 1, padding: 10 } },
+                scales: {
+                    r: { min: 0, max: 100, ticks: { display: false } }
+                }
+            }
+        });
+
+        function updateChartColors(isDark) {
+            Chart.defaults.color = isDark ? '#737373' : '#71717a';
+            
+            // FPS Chart Colors
+            fpsChartInst.data.datasets[0].backgroundColor = isDark ? 'rgba(0, 240, 255, 0.25)' : 'rgba(0, 0, 0, 0.1)';
+            fpsChartInst.data.datasets[0].borderColor = isDark ? 'rgba(0, 240, 255, 1)' : 'rgba(0, 0, 0, 0.8)';
+            fpsChartInst.data.datasets[0].hoverBackgroundColor = isDark ? 'rgba(0, 240, 255, 0.8)' : 'rgba(0, 0, 0, 0.2)';
+            
+            fpsChartInst.options.plugins.tooltip.backgroundColor = isDark ? 'rgba(10, 10, 10, 0.9)' : 'rgba(255, 255, 255, 0.95)';
+            fpsChartInst.options.plugins.tooltip.titleColor = isDark ? '#00f0ff' : '#000';
+            fpsChartInst.options.plugins.tooltip.bodyColor = isDark ? '#fff' : '#333';
+            fpsChartInst.options.plugins.tooltip.borderColor = isDark ? 'rgba(0, 240, 255, 0.3)' : 'rgba(0, 0, 0, 0.1)';
+            fpsChartInst.options.scales.y.grid.color = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)';
+            fpsChartInst.update();
+
+            // Radar Chart Colors
+            radarChartInst.data.datasets[0].backgroundColor = isDark ? 'rgba(0, 240, 255, 0.25)' : 'rgba(0, 0, 0, 0.05)';
+            radarChartInst.data.datasets[0].borderColor = isDark ? 'rgba(0, 240, 255, 1)' : 'rgba(0, 0, 0, 0.5)';
+            radarChartInst.data.datasets[0].pointBackgroundColor = isDark ? '#030303' : '#fff';
+            radarChartInst.data.datasets[0].pointBorderColor = isDark ? '#00f0ff' : '#000';
+            radarChartInst.data.datasets[0].pointHoverBackgroundColor = isDark ? '#00f0ff' : '#000';
+            radarChartInst.data.datasets[0].pointHoverBorderColor = isDark ? '#fff' : '#fff';
+
+            radarChartInst.options.plugins.tooltip.backgroundColor = isDark ? 'rgba(10, 10, 10, 0.9)' : 'rgba(255, 255, 255, 0.95)';
+            radarChartInst.options.plugins.tooltip.titleColor = isDark ? '#00f0ff' : '#000';
+            radarChartInst.options.plugins.tooltip.bodyColor = isDark ? '#fff' : '#333';
+            radarChartInst.options.plugins.tooltip.borderColor = isDark ? 'rgba(0, 240, 255, 0.3)' : 'rgba(0, 0, 0, 0.1)';
+            
+            radarChartInst.options.scales.r.angleLines.color = isDark ? 'rgba(0, 240, 255, 0.15)' : 'rgba(0, 0, 0, 0.05)';
+            radarChartInst.options.scales.r.grid.color = isDark ? 'rgba(0, 240, 255, 0.15)' : 'rgba(0, 0, 0, 0.05)';
+            radarChartInst.options.scales.r.pointLabels.color = isDark ? '#a3a3a3' : '#52525b';
+            radarChartInst.update();
+        }
+
+        // Inicializar com o tema correto
+        const isCurrentDark = htmlElement.classList.contains('dark');
+        initParticles(isCurrentDark);
+        updateChartColors(isCurrentDark);
+
+        // Modal 3D Lógica
+        const modal = document.getElementById('modal3d');
+        function open3DModal() {
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+            document.body.style.overflow = 'hidden'; 
+        }
+        function close3DModal() {
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto'; 
+            }, 300);
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) close3DModal();
+        });
+    </script>
+</body>
+</html>
