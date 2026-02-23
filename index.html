@@ -653,9 +653,17 @@
     <footer class="border-t border-black/10 dark:border-white/10 bg-light-bg/80 dark:bg-dark-900/80 backdrop-blur-md py-8 mt-10 transition-colors duration-300">
         <div class="max-w-[95rem] mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
             
-            <p class="text-sm font-mono text-gray-500 font-semibold transition-colors">
-                &copy; <span id="year"></span> RYUZEEN LAB.
-            </p>
+            <div class="flex items-center gap-4">
+                <p class="text-sm font-mono text-gray-500 font-semibold transition-colors">
+                    &copy; <span id="year"></span> RYUZEEN LAB.
+                </p>
+                
+                <!-- Contador de Visitas -->
+                <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/5 dark:bg-white/5 text-xs font-mono text-gray-600 dark:text-gray-400 transition-colors">
+                    <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                    <span id="visit-count" class="font-bold text-black dark:text-white">...</span> VIEWS
+                </div>
+            </div>
 
             <a href="https://github.com/ryuzeen" target="_blank" class="flex items-center gap-2 font-mono text-sm font-bold text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-accentDark transition-colors">
                 <i data-lucide="github" class="w-5 h-5"></i>
@@ -672,6 +680,18 @@
 
         // Footer Year
         document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Lógica do Contador de Visitas (Counter API)
+        // Usando uma namespace e key únicas para o seu site
+        fetch('https://api.counterapi.dev/v1/ryuzeen/setup-page/up')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('visit-count').textContent = data.count;
+            })
+            .catch(error => {
+                console.error('Erro ao carregar contador de visitas:', error);
+                document.getElementById('visit-count').textContent = "Offline";
+            });
 
         // Lógica do Theme Toggle (Dark/Light Mode)
         const themeToggleBtn = document.getElementById('themeToggle');
