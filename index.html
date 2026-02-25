@@ -98,6 +98,17 @@
             100% { transform: translateY(100vh); }
         }
 
+        /* Animação Fake Load */
+        @keyframes loadBar {
+            0% { width: 0%; }
+            40% { width: 50%; }
+            70% { width: 70%; }
+            100% { width: 100%; }
+        }
+        .animate-load-bar {
+            animation: loadBar 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
         /* Glitch Effect - Dinâmico */
         .glitch-text {
             position: relative;
@@ -190,7 +201,7 @@
         details > summary::-webkit-details-marker { display: none; }
     </style>
 </head>
-<body class="bg-light-bg text-gray-800 dark:bg-dark-900 dark:text-gray-300 font-sans antialiased selection:bg-accentLight selection:text-white dark:selection:bg-accentDark dark:selection:text-dark-900 relative z-0 transition-colors duration-500">
+<body class="bg-light-bg text-gray-800 dark:bg-dark-900 dark:text-gray-300 font-sans antialiased selection:bg-accentLight selection:text-white dark:selection:bg-accentDark dark:selection:text-dark-900 relative z-0 transition-colors duration-500 overflow-hidden">
 
     <!-- Script Inline para evitar Flash Branco/Escuro ao carregar a página -->
     <script>
@@ -202,6 +213,27 @@
             localStorage.setItem('theme', 'light');
         }
     </script>
+
+    <!-- FAKE LOADING SCREEN -->
+    <div id="preloader" class="fixed inset-0 z-[100] bg-light-bg dark:bg-dark-900 flex flex-col items-center justify-center transition-all duration-700">
+        <!-- Avatar com efeitos -->
+        <div class="relative w-32 h-32 md:w-40 md:h-40 mb-10">
+            <!-- Spinner Tech Layers -->
+            <div class="absolute -inset-2 rounded-2xl border-[3px] border-t-transparent border-b-transparent border-black/20 dark:border-accentDark/30 animate-spin"></div>
+            <div class="absolute -inset-4 rounded-3xl border-[1px] border-l-transparent border-r-transparent border-black/10 dark:border-accentDark/20 animate-[spin_3s_linear_infinite_reverse]"></div>
+            
+            <img src="https://avatars.akamai.steamstatic.com/8592c156617b78c0f52d4f56b7ac20284ed743e6_full.jpg" alt="Carregando..." class="relative w-full h-full object-cover rounded-xl border-2 border-white dark:border-dark-800 shadow-xl">
+        </div>
+        
+        <!-- Texto e Barra -->
+        <div class="flex items-center gap-3 font-mono text-sm font-bold tracking-[0.2em] text-gray-500 dark:text-accentDark mb-4">
+            <i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
+            SISTEMA RYUZEEN...
+        </div>
+        <div class="w-64 h-1.5 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
+            <div class="h-full bg-black dark:bg-accentDark rounded-full animate-load-bar shadow-[0_0_10px_rgba(0,0,0,0.5)] dark:shadow-[0_0_10px_rgba(0,240,255,0.8)]"></div>
+        </div>
+    </div>
 
     <!-- Background Elements -->
     <div id="particles-js" class="fixed inset-0 z-[-3]"></div>
@@ -244,16 +276,34 @@
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <header id="home" class="relative pt-40 pb-16 px-6 mx-auto max-w-7xl flex flex-col items-center text-center animate-on-scroll is-visible">
-        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-black dark:text-white mb-4 tracking-tighter uppercase flex flex-col items-center gap-1 md:gap-3 transition-colors">
-            <span class="glitch-text" data-text="Ryuzeen Lab:">Ryuzeen Lab:</span>
-            <span class="glitch-text text-gray-800 dark:text-accentDark transition-colors" data-text="Meu Setup">Meu Setup</span>
-        </h1>
+    <!-- Hero Section (Agora Horizontal com Avatar) -->
+    <header id="home" class="relative pt-40 pb-20 px-6 mx-auto max-w-[95rem] flex flex-col md:flex-row items-center md:items-center justify-center md:justify-start text-center md:text-left gap-10 lg:gap-16">
         
-        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl font-light leading-relaxed mb-8 mt-4 transition-colors">
-            Projetado para performance extrema, renderização acelerada e dominância no gameplay competitivo.
-        </p>
+        <!-- Avatar do lado esquerdo -->
+        <div class="relative w-48 h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 flex-shrink-0 group perspective-1000">
+            <div class="absolute inset-0 bg-black/5 dark:bg-accentDark/20 blur-3xl group-hover:bg-black/10 dark:group-hover:bg-accentDark/40 transition-all duration-700 rounded-full"></div>
+            <img src="https://avatars.akamai.steamstatic.com/8592c156617b78c0f52d4f56b7ac20284ed743e6_full.jpg" alt="Ryuzeen Profile" class="relative w-full h-full object-cover rounded-[2rem] border-2 border-white dark:border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,240,255,0.15)] transition-all duration-700 group-hover:scale-105 group-hover:shadow-[0_30px_60px_rgba(0,0,0,0.2)] dark:group-hover:shadow-[0_30px_60px_rgba(0,240,255,0.3)]">
+            <!-- Detalhe decorativo no canto da imagem -->
+            <div class="absolute -bottom-4 -right-4 bg-black dark:bg-accentDark text-white dark:text-dark-900 w-12 h-12 flex items-center justify-center rounded-xl shadow-lg border border-white/20 dark:border-transparent transform rotate-12 transition-transform group-hover:rotate-0 duration-500">
+                <i data-lucide="zap" class="w-6 h-6"></i>
+            </div>
+        </div>
+
+        <!-- Textos do lado direito -->
+        <div class="flex flex-col items-center md:items-start justify-center animate-on-scroll">
+            <h1 class="text-6xl md:text-8xl lg:text-[7rem] font-black text-black dark:text-white leading-[0.9] tracking-tighter uppercase transition-colors mb-2">
+                <span class="glitch-text" data-text="RYUZEEN">RYUZEEN</span>
+            </h1>
+            
+            <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold text-gray-500 dark:text-accentDark tracking-tight uppercase flex flex-col md:flex-row md:items-center gap-2 md:gap-4 transition-colors mb-6">
+                <span class="hidden md:block w-12 h-1.5 bg-black/20 dark:bg-accentDark/50 rounded-full"></span>
+                SE LIGA NO MEU SETUP!
+            </h2>
+            
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-2xl font-light leading-relaxed transition-colors">
+                Desenvolvido para alta performance e precisão. Uma máquina preparada para renderização extrema e domínio absoluto no gameplay competitivo. Bem-vindo ao lab.
+            </p>
+        </div>
     </header>
 
     <main class="mx-auto max-w-[95rem] px-6 pb-20">
@@ -681,8 +731,28 @@
         // Footer Year
         document.getElementById('year').textContent = new Date().getFullYear();
 
+        // Lógica FAKE LOADING SCREEN
+        window.addEventListener('load', () => {
+            // Segura a tela de load por 2.5 segundos para o usuário ver a animação
+            setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                preloader.classList.add('opacity-0');
+                preloader.classList.add('pointer-events-none');
+                
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    document.body.classList.remove('overflow-hidden'); // Libera o scroll da página
+                    
+                    // Dispara a animação dos elementos iniciais
+                    const heroElement = document.getElementById('home');
+                    if (heroElement) {
+                        heroElement.classList.add('is-visible');
+                    }
+                }, 700);
+            }, 2500); 
+        });
+
         // Lógica do Contador de Visitas (Counter API)
-        // Usando uma namespace e key únicas para o seu site
         fetch('https://api.counterapi.dev/v1/ryuzeen/setup-page/up')
             .then(response => response.json())
             .then(data => {
@@ -727,7 +797,8 @@
 
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
+                // Não anima o header por aqui se ele for o primeiro elemento, quem anima é o preloader
+                if (entry.isIntersecting && entry.target.id !== 'home') {
                     entry.target.classList.add('is-visible');
                     observer.unobserve(entry.target);
                 }
@@ -740,7 +811,6 @@
 
         // Partículas Dinâmicas
         function initParticles(isDark) {
-            // Remove instâncias antigas se existirem
             if(window.pJSDom && window.pJSDom.length > 0) {
                 window.pJSDom[0].pJS.fn.vendors.destroypJS();
                 window.pJSDom = [];
@@ -860,13 +930,13 @@
         function open3DModal() {
             modal.classList.remove('hidden');
             setTimeout(() => modal.classList.remove('opacity-0'), 10);
-            document.body.style.overflow = 'hidden'; 
+            document.body.classList.add('overflow-hidden'); 
         }
         function close3DModal() {
             modal.classList.add('opacity-0');
             setTimeout(() => {
                 modal.classList.add('hidden');
-                document.body.style.overflow = 'auto'; 
+                document.body.classList.remove('overflow-hidden'); 
             }, 300);
         }
 
