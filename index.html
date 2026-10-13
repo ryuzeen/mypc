@@ -5,44 +5,82 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ryu · setup</title>
   <meta name="description" content="PC e periféricos do ryu: RTX 4070 Super, Ryzen 7 7700X, 32 GB DDR5, monitor 240 Hz.">
-  <meta name="theme-color" content="#0b0b0c">
+  <meta name="theme-color" content="#0a0b0d">
   <meta property="og:title" content="ryu · setup">
   <meta property="og:description" content="RTX 4070 Super · Ryzen 7 7700X · 32 GB DDR5 · 240 Hz">
   <meta property="og:image" content="https://ryuzeen.github.io/mypc/assets/img/case.webp">
   <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <style>
-    @font-face { font-family: "Archivo"; src: url("assets/fonts/archivo-latin.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
-    :root { color-scheme: dark; --bg: #0b0b0c; --text: #f1eee9; --text-2: #aaa49c; --line: rgba(255, 240, 225, 0.1); --ease-out: cubic-bezier(0.23, 1, 0.32, 1); }
-    * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100svh; background: var(--bg); color: var(--text); font-family: "Archivo", system-ui, sans-serif; display: grid; align-content: center; padding: clamp(1.5rem, 6vw, 5rem); -webkit-font-smoothing: antialiased; }
-    ::selection { background: var(--text); color: var(--bg); }
-    :focus-visible { outline: 2px solid var(--text); outline-offset: 4px; border-radius: 6px; }
-    h1 { margin: 0; font-size: clamp(5rem, 18vw, 13rem); font-weight: 900; font-stretch: 125%; letter-spacing: -0.05em; line-height: 0.8; }
-    p { margin: 1.5rem 0 0; color: var(--text-2); font-size: 1.1rem; max-width: 40ch; }
-    ol { list-style: none; margin: 3rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); }
-    li + li { border-left: 1px solid var(--line); }
-    a { display: block; height: 100%; padding: 1.5rem 1.5rem 1.75rem; color: inherit; text-decoration: none; transition: background-color 200ms ease; }
-    a:hover { background: rgba(255, 255, 255, 0.04); }
-    a:active { transform: scale(0.99); }
-    b { display: block; font-size: 1.6rem; font-weight: 850; font-stretch: 112%; letter-spacing: -0.03em; }
-    span { display: block; margin-top: 0.5rem; color: var(--text-2); line-height: 1.45; }
-    h1 + p { margin-top: clamp(2.5rem, 6vw, 4.5rem); }
-    .steam { margin-top: 1rem; }
-    .steam a { display: inline; padding: 0; color: var(--text); text-decoration: underline; text-underline-offset: 0.25em; text-decoration-thickness: 1px; }
-    .go { margin-top: 1.25rem; color: var(--text); font-weight: 650; }
-    .go::after { content: "→"; display: inline-block; margin-left: 0.35em; transition: transform 200ms var(--ease-out); }
-    a:hover .go::after { transform: translateX(4px); }
-    @media (max-width: 760px) { ol { grid-template-columns: 1fr; } li + li { border-left: 0; border-top: 1px solid var(--line); } a { padding-inline: 0; } }
-  </style>
+  <link rel="preload" href="assets/img/case.webp" as="image">
+  <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
-  <h1>ryu</h1>
-  <p>Três jeitos de ver o mesmo setup. Escolhe o que curtir mais.</p>
-  <p class="steam"><a href="https://steamcommunity.com/id/imryuzeen/" target="_blank" rel="noopener">Perfil na Steam ↗</a></p>
-  <ol>
-    <li><a href="a/"><b>A · Vitrine</b><span>Prateleiras de loja à noite, etiqueta de preço amarela em cada peça. Clica na etiqueta pra ver as specs.</span><span class="go">Abrir</span></a></li>
-    <li><a href="b/"><b>B · Loadout</b><span>Tela única tipo inventário de jogo. Slots na esquerda, item grande no meio, Q e E trocam de aba.</span><span class="go">Abrir</span></a></li>
-    <li><a href="c/"><b>C · Um por tela</b><span>Cada item ocupa a tela inteira e o fundo muda de cor com ele. Rola e vai passando.</span><span class="go">Abrir</span></a></li>
-  </ol>
+  <div class="ambient" aria-hidden="true">
+    <span class="blob blob-a"></span>
+    <span class="blob blob-b"></span>
+    <span class="cursor-light"></span>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="bar">
+    <div class="bar-left">
+      <a class="mark" href="#top">ryu</a>
+      <a class="steam" data-steam target="_blank" rel="noopener">Steam ↗</a>
+    </div>
+    <nav class="tabs" aria-label="Seções">
+      <kbd class="hint" aria-hidden="true">Q</kbd>
+      <a href="#pc">PC</a>
+      <a href="#mesa">Mesa</a>
+      <a href="#guardados">Guardados</a>
+      <a href="#desempenho">Desempenho</a>
+      <kbd class="hint" aria-hidden="true">E</kbd>
+    </nav>
+    <span class="bar-total"><span class="bar-total-label"></span> <b class="bar-total-val"></b></span>
+  </header>
+
+  <main id="top">
+    <section class="hero" data-tint="#ff7a2f" aria-labelledby="hero-t">
+      <div class="hero-copy">
+        <h1 id="hero-t" class="hero-word">ryu</h1>
+        <p class="hero-line">O PC, a mesa e o que fica guardado.</p>
+        <dl class="hero-specs">
+          <div><dt>GPU</dt><dd>RTX 4070 Super</dd></div>
+          <div><dt>CPU</dt><dd>Ryzen 7 7700X</dd></div>
+          <div><dt>RAM</dt><dd>32 GB DDR5</dd></div>
+          <div><dt>Tela</dt><dd>240 Hz</dd></div>
+        </dl>
+      </div>
+      <figure class="hero-case">
+        <span class="hero-ring" aria-hidden="true"></span>
+        <img src="assets/img/case.webp" alt="Gabinete Liketec Madness Cube com fans laranja" width="823" height="820" fetchpriority="high">
+      </figure>
+      <a class="scroll-cue" href="#pc">Ver o setup
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 3v10m0 0 4-4m-4 4-4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </section>
+
+    <!-- one bay per group is built by site.js -->
+    <div id="bays"></div>
+
+    <section class="perf" id="desempenho" data-tint="#ff7a2f" aria-labelledby="perf-t">
+      <div class="perf-copy">
+        <p class="p-kind">1080p</p>
+        <h2 id="perf-t" class="perf-title">Quanto roda</h2>
+        <p class="perf-line">Faixas de FPS para Ryzen 7 7700X + RTX 4070 Super, tiradas de reviews e calculadoras públicas. Não medido neste PC.</p>
+        <p class="perf-note">Tudo que passa da linha tracejada já é mais do que o monitor de 240 Hz consegue mostrar.</p>
+        <p class="perf-note">Fontes: <span data-sources></span></p>
+      </div>
+      <div class="chart" role="img" aria-describedby="perf-table"></div>
+      <table id="perf-table" class="sr-only"></table>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <dl class="foot-totals"></dl>
+    <p>Preços: média de anúncios no Brasil em <span data-date></span>, exceto onde diz valor pago. Fotos dos fabricantes e lojas.</p>
+    <p class="keys" aria-hidden="true"><kbd>Q</kbd><kbd>E</kbd> seções · <kbd>↑</kbd><kbd>↓</kbd> itens · <kbd>G</kbd> buscar</p>
+  </footer>
+
+  <script src="assets/data.js"></script>
+  <script src="assets/site.js"></script>
 </body>
 </html>
