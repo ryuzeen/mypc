@@ -84,6 +84,8 @@ kbd {
   letter-spacing: -0.03em;
   line-height: 1;
 }
+.steam { margin-left: 0.9rem; font-size: 0.85rem; font-weight: 600; font-stretch: 100%; letter-spacing: 0; color: var(--text-2); text-decoration: none; vertical-align: middle; transition: color 160ms ease; }
+.steam:hover { color: var(--text); }
 .tabs { display: flex; align-items: center; gap: 0.35rem; }
 .tabs [role="tab"] {
   all: unset;

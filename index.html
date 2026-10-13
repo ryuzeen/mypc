@@ -26,8 +26,11 @@
     a:active { transform: scale(0.99); }
     b { display: block; font-size: 1.6rem; font-weight: 850; font-stretch: 112%; letter-spacing: -0.03em; }
     span { display: block; margin-top: 0.5rem; color: var(--text-2); line-height: 1.45; }
+    h1 + p { margin-top: clamp(2.5rem, 6vw, 4.5rem); }
+    .steam { margin-top: 1rem; }
+    .steam a { display: inline; padding: 0; color: var(--text); text-decoration: underline; text-underline-offset: 0.25em; text-decoration-thickness: 1px; }
     .go { margin-top: 1.25rem; color: var(--text); font-weight: 650; }
-    .go::after { content: " →"; display: inline-block; transition: transform 200ms var(--ease-out); }
+    .go::after { content: "→"; display: inline-block; margin-left: 0.35em; transition: transform 200ms var(--ease-out); }
     a:hover .go::after { transform: translateX(4px); }
     @media (max-width: 760px) { ol { grid-template-columns: 1fr; } li + li { border-left: 0; border-top: 1px solid var(--line); } a { padding-inline: 0; } }
   </style>
@@ -35,6 +38,7 @@
 <body>
   <h1>ryu</h1>
   <p>Três jeitos de ver o mesmo setup. Escolhe o que curtir mais.</p>
+  <p class="steam"><a href="https://steamcommunity.com/id/imryuzeen/" target="_blank" rel="noopener">Perfil na Steam ↗</a></p>
   <ol>
     <li><a href="a/"><b>A · Vitrine</b><span>Prateleiras de loja à noite, etiqueta de preço amarela em cada peça. Clica na etiqueta pra ver as specs.</span><span class="go">Abrir</span></a></li>
     <li><a href="b/"><b>B · Loadout</b><span>Tela única tipo inventário de jogo. Slots na esquerda, item grande no meio, Q e E trocam de aba.</span><span class="go">Abrir</span></a></li>

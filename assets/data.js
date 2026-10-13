@@ -1,6 +1,7 @@
 // Setup do ryu. Preços: média de anúncios no Brasil, pesquisa de outubro de 2026.
 window.SETUP = {
   priceDate: 'out/2026',
+  steam: 'https://steamcommunity.com/id/imryuzeen/',
 
   pc: [
     {
@@ -49,7 +50,7 @@ window.SETUP = {
       id: 'case', kind: 'Gabinete', name: 'Madness Cube', brand: 'Liketec',
       line: 'Aquário · vidro temperado', img: 'case.webp', tint: '#ff7a2f',
       specs: [['Tipo', 'Aquário'], ['Placa-mãe', 'até mATX'], ['Laterais', 'Vidro temperado'], ['Formato', 'Mid tower']],
-      price: 400, priceNote: 'estimado',
+      price: 800, priceNote: 'valor pago, fora de linha',
       q: 'Gabinete Liketec Madness Cube',
     },
   ],
@@ -94,7 +95,7 @@ window.SETUP = {
       id: 'speaker', kind: 'Caixa de som', name: 'M260', brand: 'Edifier',
       line: 'Madeira marrom e preto · Bluetooth', img: 'speaker.webp', tint: '#c0612b',
       specs: [['Potência', '20 W'], ['Conexão', 'Bluetooth 5.0'], ['Bateria', '2500 mAh'], ['Extra', 'Relógio LED']],
-      price: 500, priceNote: 'estimado, pouco vendida no BR',
+      price: 550, priceNote: 'valor pago',
       q: 'Edifier M260 caixa de som marrom',
     },
   ],
@@ -131,7 +132,7 @@ window.SETUP = {
     },
     {
       id: 'mad68', kind: 'Teclado', name: 'MAD 68 HE', brand: 'MADLIONS',
-      line: 'Magnético · Ultimate Magnet Pro', img: null, tint: '#e0262b',
+      line: 'Flagship preto · Ultimate Magnet Pro', img: 'mad68.webp', tint: '#e0262b',
       specs: [['Switch', 'Magnético'], ['Polling', '8000 Hz'], ['Layout', '68 teclas'], ['Conexão', 'Cabo']],
       price: 310, priceNote: 'importado',
       q: 'MADLIONS MAD 68 HE',

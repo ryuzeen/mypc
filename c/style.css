@@ -78,6 +78,8 @@ h1, h2, h3, p, dl, dd { margin: 0; }
   color: var(--text);
 }
 .hud-group { font-size: 0.9rem; color: var(--text-2); margin-left: 0.5rem; }
+.steam { font-size: 0.9rem; font-weight: 600; color: var(--text-2); text-decoration: none; transition: color 160ms ease; }
+.steam:hover { color: var(--text); }
 .hud-count { margin-left: auto; font-size: 0.9rem; color: var(--text-2); }
 
 .progress {
