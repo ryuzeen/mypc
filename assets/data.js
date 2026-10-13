@@ -85,11 +85,11 @@ window.SETUP = {
       q: 'Logitech G Pro X 2 Lightspeed',
     },
     {
-      id: 'pad', kind: 'Mousepad', name: 'Linhas P&B 45 × 40', brand: 'Riccu',
-      line: 'Arte em linhas brancas · bordas costuradas', img: 'pad.webp', tint: '#d9d9d9',
-      specs: [['Tamanho', '45 × 40 cm'], ['Base', 'Borracha'], ['Bordas', 'Costuradas'], ['Estampa', 'Black-8']],
-      price: 50, priceNote: 'importado',
-      q: 'mousepad black white lines comic girls 400x450',
+      id: 'pad', kind: 'Mousepad', name: 'Kanji 45 × 40', brand: 'Custom',
+      line: 'Preto com kanji vermelho · control', img: 'pad.webp', tint: '#e0262b',
+      specs: [['Tamanho', '45 × 40 cm'], ['Espessura', '4 mm'], ['Superfície', 'Control']],
+      price: 100, priceNote: 'estimado',
+      q: 'mousepad kanji 45x40 control',
     },
     {
       id: 'speaker', kind: 'Caixa de som', name: 'M260', brand: 'Edifier',
@@ -143,6 +143,13 @@ window.SETUP = {
       specs: [['Conexão', '2.4G / BT / cabo'], ['Bateria', '1600 mAh'], ['Switch', 'Hot-swap'], ['Layout', '84 teclas']],
       price: 200, priceNote: 'importado',
       q: 'E-YOOSO Z84 teclado',
+    },
+    {
+      id: 'riccu', kind: 'Mousepad', name: 'Linhas P&B 45 × 40', brand: 'Riccu',
+      line: 'Arte em linhas brancas · bordas costuradas', img: 'riccu.webp', tint: '#d9d9d9',
+      specs: [['Tamanho', '45 × 40 cm'], ['Base', 'Borracha'], ['Bordas', 'Costuradas'], ['Estampa', 'Black-8']],
+      price: 50, priceNote: 'importado',
+      q: 'mousepad black white lines comic girls 400x450',
     },
     {
       id: 'kz', kind: 'Fone', name: 'EDX Pro X', brand: 'KZ',
