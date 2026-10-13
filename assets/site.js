@@ -18,6 +18,25 @@
     if (id !== 'desempenho' && !GROUPS.find((g) => g.id === id)) a.remove();
   });
 
+  // decoded images by file, so a swap only starts once the picture can paint
+  const decoded = {};
+  function load(it) {
+    if (!decoded[it.img]) {
+      decoded[it.img] = new Promise((done) => {
+        const im = new Image();
+        const finish = () => done(im);
+        im.onload = () => {
+          // decode() can stall in background tabs; never wait on it for long
+          Promise.race([im.decode().catch(() => {}), new Promise((r) => setTimeout(r, 120))]).then(finish);
+        };
+        im.onerror = finish;
+        im.src = 'assets/img/' + it.img;
+      });
+    }
+    return decoded[it.img];
+  }
+
+
   // ---------- bays ----------
 
   const bays = $('#bays');
@@ -46,7 +65,7 @@
     g.list.forEach((it, k) => {
       const li = document.createElement('li');
       li.innerHTML = `<button class="slot" type="button" aria-pressed="false">
-        <span class="slot-thumb"><img src="assets/img/${it.img}" alt="" loading="lazy"></span>
+        <span class="slot-thumb"><img src="assets/img/thumb/${it.img}" alt="" width="52" height="52"></span>
         <span><span class="slot-kind">${it.kind}</span><span class="slot-name">${it.brand} ${it.name}</span></span>
       </button>`;
       const b = li.firstElementChild;
@@ -55,7 +74,7 @@
       slots.append(li);
     });
 
-    state[g.id] = { g, sec, index: -1, front: 0, timer: 0 };
+    state[g.id] = { g, sec, index: -1, front: 0, timer: 0, seq: 0 };
     select(g.id, 0, true);
 
     // the item turns a little toward the cursor
@@ -74,8 +93,6 @@
     }
   });
 
-  // warm the cache so swaps never flash empty
-  GROUPS.forEach((g) => g.list.forEach((it) => { new Image().src = 'assets/img/' + it.img; }));
 
   function select(gid, i, instant = false) {
     const st = state[gid];
@@ -89,15 +106,6 @@
     $$('.slot', sec).forEach((b, k) => b.setAttribute('aria-pressed', k === i));
     if (current === sec) setTint(it.tint);
     sec.dataset.tint = it.tint;
-
-    const imgs = $$('.media img', sec);
-    const out = imgs[st.front];
-    st.front = 1 - st.front;
-    const inc = imgs[st.front];
-    inc.src = 'assets/img/' + it.img;
-    inc.alt = `${it.brand} ${it.name}`;
-    inc.removeAttribute('aria-hidden');
-    out.setAttribute('aria-hidden', 'true');
 
     const ghost = $('.ghost', sec);
     const panel = $('.panel-body', sec);
@@ -115,10 +123,30 @@
     };
 
     clearTimeout(st.timer);
+    const seq = ++st.seq;
     if (instant || reduce) {
+      fillText();
+      swapImage(st, it, true);
+      return;
+    }
+    ghost.classList.add('is-swapping');
+    panel.classList.add('is-swapping');
+    st.timer = setTimeout(fillText, 150);
+    load(it).then(() => { if (seq === st.seq) swapImage(st, it, false); });
+  }
+
+  function swapImage(st, it, instant) {
+    const imgs = $$('.media img', st.sec);
+    const out = imgs[st.front];
+    st.front = 1 - st.front;
+    const inc = imgs[st.front];
+    inc.src = 'assets/img/' + it.img;
+    inc.alt = `${it.brand} ${it.name}`;
+    inc.removeAttribute('aria-hidden');
+    out.setAttribute('aria-hidden', 'true');
+    if (instant) {
       out.classList.remove('is-current', 'is-leaving');
       inc.classList.add('is-current');
-      fillText();
       return;
     }
     inc.classList.remove('is-current');
@@ -130,10 +158,12 @@
       inc.classList.add('is-current');
     }));
     setTimeout(() => out.classList.remove('is-leaving'), 200);
-    ghost.classList.add('is-swapping');
-    panel.classList.add('is-swapping');
-    st.timer = setTimeout(fillText, 150);
   }
+
+  // first item of every bay first, then the rest in order
+  GROUPS.forEach((g) => load(g.list[0]));
+  const warm = () => GROUPS.forEach((g) => g.list.forEach(load));
+  if ('requestIdleCallback' in window) requestIdleCallback(warm, { timeout: 1500 }); else setTimeout(warm, 600);
 
   // ---------- performance ----------
 

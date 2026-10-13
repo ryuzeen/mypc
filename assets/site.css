@@ -53,7 +53,7 @@ body {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: #2a2e35; border: 3px solid var(--bg); border-radius: 10px; }
 button { font: inherit; color: inherit; }
-img { display: block; max-width: 100%; }
+img { display: block; max-width: 100%; height: auto; }
 h1, h2, h3, p, dl, dd { margin: 0; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 kbd {
@@ -388,7 +388,8 @@ kbd {
 .media {
   position: relative;
   display: grid;
-  place-items: center;
+  /* fixed tracks: a wide photo can't grow the cell past the box */
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
   width: min(84%, 660px);
   height: min(64svh, 580px);
   transform: rotateY(var(--ry, 0deg)) rotateX(var(--rx, 0deg));
@@ -396,8 +397,8 @@ kbd {
 }
 .media img {
   grid-area: 1 / 1;
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   filter: drop-shadow(0 40px 40px rgba(0, 0, 0, 0.6));
   opacity: 0;
