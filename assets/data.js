@@ -145,6 +145,13 @@ window.SETUP = {
       q: 'E-YOOSO Z84 teclado',
     },
     {
+      id: 'superlight', kind: 'Mouse', name: 'G Pro X Superlight', brand: 'Logitech',
+      line: 'Primeira geração · sem fio', img: 'superlight.webp', tint: '#8a8f99',
+      specs: [['Peso', '63 g'], ['Sensor', 'HERO 25K'], ['Conexão', 'Lightspeed'], ['Bateria', 'até 70 h']],
+      price: 850,
+      q: 'Logitech G Pro X Superlight',
+    },
+    {
       id: 'riccu', kind: 'Mousepad', name: 'Linhas P&B 45 × 40', brand: 'Riccu',
       line: 'Arte em linhas brancas · bordas costuradas', img: 'riccu.webp', tint: '#d9d9d9',
       specs: [['Tamanho', '45 × 40 cm'], ['Base', 'Borracha'], ['Bordas', 'Costuradas'], ['Estampa', 'Black-8']],
