@@ -5,11 +5,11 @@ window.SETUP = {
 
   pc: [
     {
-      id: 'gpu', kind: 'Placa de vídeo', name: 'RTX 4070 Super', brand: 'Gigabyte Windforce OC',
-      line: '12 GB GDDR6X', img: 'gpu.webp', tint: '#ff7a2f',
-      specs: [['Boost', '2475 MHz'], ['Memória', '12 GB GDDR6X'], ['Barramento', '192 bits'], ['TDP', '220 W']],
+      id: 'gpu', kind: 'Placa de vídeo', name: 'RTX 4070 Super', brand: 'PNY',
+      line: 'XLR8 Gaming Verto Epic-X RGB · OC', img: 'gpu.webp', tint: '#ff4d4d',
+      specs: [['Memória', '12 GB GDDR6X'], ['Barramento', '192 bits'], ['Fans', '3 × ARGB'], ['TDP', '220 W']],
       price: 4200, priceNote: 'usada, fora de linha',
-      q: 'Gigabyte RTX 4070 Super Windforce OC 12GB',
+      q: 'PNY RTX 4070 Super XLR8 Verto Epic-X RGB',
     },
     {
       id: 'cpu', kind: 'Processador', name: 'Ryzen 7 7700X', brand: 'AMD',
@@ -19,11 +19,18 @@ window.SETUP = {
       q: 'AMD Ryzen 7 7700X',
     },
     {
-      id: 'ram', kind: 'Memória', name: 'Fury Beast 32 GB', brand: 'Kingston',
-      line: 'DDR5 5200 MHz · 2 × 16 GB', img: 'ram.webp', tint: '#c9a24a',
-      specs: [['Kit', '2 × 16 GB'], ['Tipo', 'DDR5'], ['Frequência', '5200 MHz'], ['Latência', 'CL40']],
-      price: 4500, priceNote: 'DDR5 em alta',
-      q: 'Kingston Fury Beast 32GB 2x16 DDR5 5200',
+      id: 'cooler', kind: 'Watercooler', name: 'MasterLiquid 360L Core', brand: 'Cooler Master',
+      line: '360 mm · 3 fans ARGB', img: 'cooler.webp', tint: '#b26bff',
+      specs: [['Radiador', '360 mm'], ['Fans', '3 × 120 mm ARGB'], ['Soquete', 'AM5 / LGA1700'], ['Cor', 'Preto']],
+      price: 850,
+      q: 'Cooler Master MasterLiquid 360L Core ARGB',
+    },
+    {
+      id: 'ram', kind: 'Memória', name: 'Fury Beast RGB 32 GB', brand: 'Kingston',
+      line: 'DDR5 6000 MHz · 2 × 16 GB', img: 'ram.webp', tint: '#c9a24a',
+      specs: [['Kit', '2 × 16 GB'], ['Frequência', '6000 MHz'], ['Latência', 'CL36'], ['Perfil', 'EXPO']],
+      price: 5000, priceNote: 'DDR5 em alta',
+      q: 'Kingston Fury Beast RGB 32GB DDR5 6000 KF560C36BBEAK2-32',
     },
     {
       id: 'mobo', kind: 'Placa-mãe', name: 'TUF B650M-Plus WiFi', brand: 'ASUS',

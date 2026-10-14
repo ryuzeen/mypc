@@ -36,7 +36,7 @@ It is one specific real setup, not a store or a build guide. Everything on it is
 ## Evidence on Hand
 
 - Product cut-out images: `assets/img/*.webp` (manufacturer/store photos, backgrounds removed).
-- Parts list: RTX 4070 Super (Gigabyte Windforce OC), Ryzen 7 7700X, Kingston Fury Beast 32 GB DDR5 5200, ASUS TUF B650M-Plus WiFi, MSI MAG A850GL, Kingston NV2 1 TB, Liketec Madness Cube.
+- Parts list: RTX 4070 Super (PNY XLR8 Verto Epic-X RGB), Ryzen 7 7700X, Cooler Master MasterLiquid 360L Core ARGB, Kingston Fury Beast RGB 32 GB DDR5 6000 CL36, ASUS TUF B650M-Plus WiFi, MSI MAG A850GL, Kingston NV2 1 TB, Liketec Madness Cube.
 - Peripherals: AOC Agon 240 Hz 1080p, WLmouse Beast X Max, Logitech G Pro X TKL Rapid, Logitech G Pro X 2 Lightspeed, Kanji mousepad 45×40.
 - No measured benchmarks from this PC yet.
 
