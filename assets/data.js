@@ -64,6 +64,13 @@ window.SETUP = {
       q: 'Monitor AOC Agon 24.5 240Hz',
     },
     {
+      id: 'aoc144', kind: 'Segundo monitor', name: '24G2 24"', brand: 'AOC',
+      line: '144 Hz · IPS · 1080p', img: 'aoc144.webp', tint: '#e0402b',
+      specs: [['Taxa', '144 Hz'], ['Painel', 'IPS'], ['Resolução', '1920 × 1080'], ['Resposta', '1 ms']],
+      price: 700,
+      q: 'Monitor AOC 24G2 144Hz',
+    },
+    {
       id: 'mouse', kind: 'Mouse', name: 'Beast X Max', brand: 'WLmouse',
       line: '42 g · magnésio', img: 'mouse.webp', tint: '#8a8f99',
       specs: [['Peso', '42 g'], ['Carcaça', 'Magnésio'], ['Sensor', 'PAW3950'], ['Polling', '8000 Hz']],
@@ -76,6 +83,13 @@ window.SETUP = {
       specs: [['Switch', 'Magnético analógico'], ['Modo', 'Rapid trigger'], ['Formato', 'TKL'], ['Conexão', 'Cabo']],
       price: 1300,
       q: 'Logitech G Pro X TKL Rapid',
+    },
+    {
+      id: 'qk61', kind: 'Teclado 60%', name: 'QK61 V2', brand: 'CIDOO',
+      line: 'Gasket · VIA · cabo, 2.4G e Bluetooth', img: 'qk61.webp', tint: '#7a5cff',
+      specs: [['Layout', '60%'], ['Estrutura', 'Gasket'], ['Software', 'VIA'], ['Conexão', 'Cabo / 2.4G / BT']],
+      price: 350, priceNote: 'importado',
+      q: 'CIDOO QK61 V2',
     },
     {
       id: 'headset', kind: 'Headset', name: 'G Pro X 2', brand: 'Logitech',
